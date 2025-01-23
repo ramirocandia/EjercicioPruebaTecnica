@@ -1,5 +1,8 @@
 package mx.com.trupper.entity;
 
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,23 +19,26 @@ public class ProductoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int producto_id;
 
-	//private int orden_id;
-	private String codigo;
-	private String descripcion;
-	private double precio;
-	
-	
-	
 	@ManyToOne
-	@JoinColumn(name = "orden_id")
-	private OrdenesEntity listaOrdenes;
+	@JoinColumn(name = "orden_id", nullable = false)
+	private OrdenEntity orden;
+
+	@Column(name = "codigo", nullable = false, length = 20)
+	private String codigo;
+
+	@Column(name = "descripcion", nullable = false, length = 200)
+	private String descripcion;
+
+	@Column(name = "precio", nullable = false)
+	private BigDecimal precio;
 
 	public ProductoEntity() {
 
 	}
 
-	public ProductoEntity(int producto_id, int orden_id, String codigo, String descripcion, double precio) {
+	public ProductoEntity(int producto_id, OrdenEntity orden, String codigo, String descripcion, BigDecimal precio) {
 		this.producto_id = producto_id;
+		this.orden = orden;
 		this.codigo = codigo;
 		this.descripcion = descripcion;
 		this.precio = precio;
@@ -46,7 +52,13 @@ public class ProductoEntity {
 		this.producto_id = producto_id;
 	}
 
-	
+	public OrdenEntity getOrden() {
+		return orden;
+	}
+
+	public void setOrden(OrdenEntity orden) {
+		this.orden = orden;
+	}
 
 	public String getCodigo() {
 		return codigo;
@@ -64,20 +76,12 @@ public class ProductoEntity {
 		this.descripcion = descripcion;
 	}
 
-	public double getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
-	}
-
-	public OrdenesEntity getListaOrdenes() {
-		return listaOrdenes;
-	}
-
-	public void setListaOrdenes(OrdenesEntity listaOrdenes) {
-		this.listaOrdenes = listaOrdenes;
 	}
 
 }
