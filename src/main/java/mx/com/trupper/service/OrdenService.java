@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.internal.CriteriaImpl.OrderEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,18 @@ public class OrdenService {
 		this.ordenRepository = ordenRepository;
 		this.sucursalRepository = sucursalRepository;
 		this.productoRepository = productoRepository;
+	}
+
+	public List<SucursalEntity> getAllSucursal() {
+		return sucursalRepository.findAll();
+	}
+
+	public List<ProductoEntity> getAllProducts() {
+		return productoRepository.findAll();
+	}
+
+	public List<OrdenEntity> getAllOrden() {
+		return ordenRepository.findAll();
 	}
 
 	public OrdenEntity crear(OrdenDTO ordenDTO) {
